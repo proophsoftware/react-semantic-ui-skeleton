@@ -12,7 +12,7 @@ import { createHashHistory } from 'history';
 import { createStore, applyMiddleware, StoreEnhancer } from 'redux';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
-import { Route, Switch, Router } from 'react-router';
+import { Route, Switch, Router, Redirect } from 'react-router';
 
 import Overview from './Overview';
 import './theme/semantic/semantic.css';
@@ -73,7 +73,8 @@ sagaMiddleware.run(rootSaga as any);
 // Routes (provided that one matches).
 const Main = () => (
     <Switch>
-        <Route exact path={Routes.rootPath} component={Overview}/>
+        <Redirect exact path={Routes.rootPath} to={Routes.overviewPath}/>
+        <Route exact path={Routes.overviewPath} component={Overview}/>
     </Switch>
 );
 
