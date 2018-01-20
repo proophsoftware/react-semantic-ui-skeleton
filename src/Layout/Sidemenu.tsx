@@ -12,14 +12,26 @@ export interface SidemenuProps extends InjectedTranslateProps {
 
 const Sidemenu = pure((props: SidemenuProps) => {
     return (
-        <Sidebar as={Menu} animation="push" width="thin" visible={props.visible} icon="labeled" vertical={true}
-                 inverted={true}>
+        <Sidebar
+            as={Menu}
+            animation="push"
+            width="thin"
+            visible={props.visible}
+            icon="labeled"
+            vertical={true}
+            inverted={true}
+        >
             <MenuItem active={false}>
                 <Image src={logo}/>
             </MenuItem>
-            <MenuItem link={true}>
-                <NavLink  onClick={props.handleClick} to="/"
-                         activeClassName="active">{props.t('app.title')}</NavLink>
+            <MenuItem
+                link={true}
+                as={NavLink}
+                onClick={props.handleClick}
+                to="/"
+                activeClassName="active"
+            >
+                {props.t('app.title')}
             </MenuItem>
         </Sidebar>
     );

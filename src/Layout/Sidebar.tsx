@@ -48,8 +48,8 @@ class SidebarPusher extends React.Component<OwnProps, StateProps> {
             <Sidebar.Pushable as={Segment}>
                 <Sidemenu visible={visible} handleClick={this.handleClick}/>
                 <TopMenu>
-                    <Menu.Item as="a">
-                        <Icon size="large" name="sidebar" onClick={this.toggleVisibility}/>
+                    <Menu.Item as="a" onClick={this.toggleVisibility}>
+                        <Icon size="large" name="sidebar"/>
                     </Menu.Item>
                 </TopMenu>
                 <Sidebar.Pusher style={{
