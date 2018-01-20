@@ -21,6 +21,8 @@ This is a list of files which contains default values.
 - `src/notify.tsx`: change logo
 - `src/reducer.ts`: add your reducers
 - `src/registerServiceWorker.ts`: notification text
+- `devSrvProxy.json.dist`: Proxy config for dev server
+- `docker-compose.yml.dist`: Docker Dev Env (f.e. join backend network)
 
 ## Frontend build
 We have a two stage build.

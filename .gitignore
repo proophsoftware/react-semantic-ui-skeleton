@@ -24,3 +24,6 @@ yarn-error.log*
 app.env
 
 src/theme/semantic/
+
+devSrvProxy.json
+docker-compose.yml
