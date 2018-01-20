@@ -15,11 +15,10 @@ class SidebarPusher extends React.Component<OwnProps, StateProps> {
 
     componentWillUpdate(nextProps: OwnProps, nextState: StateProps) {
         // when the menu becomes visible, setup some handlers so we can close the menu easily
-        if (nextState.visible == true) {
+        if (nextState.visible === true) {
             document.addEventListener('keydown', this.handleKeyPress);
             document.querySelector('.pusher').addEventListener('click', this.handleClick);
-        }
-        else {
+        } else {
             document.removeEventListener('keydown', this.handleKeyPress);
             document.querySelector('.pusher').removeEventListener('click', this.handleClick);
         }
@@ -29,15 +28,15 @@ class SidebarPusher extends React.Component<OwnProps, StateProps> {
         if (this.state.visible) {
             this.setState({visible: false});
         }
-    };
+    }
 
     toggleVisibility = () => this.setState((prevstate: StateProps) => {
         return {visible: !prevstate.visible};
-    });
+    })
 
     hideSidebar = () => this.state.visible && this.setState((prevstate: StateProps) => {
         return {visible: false};
-    });
+    })
 
     handleKeyPress = (e) => e.keyCode === 27 && this.hideSidebar();
 
@@ -52,10 +51,12 @@ class SidebarPusher extends React.Component<OwnProps, StateProps> {
                         <Icon size="large" name="sidebar"/>
                     </Menu.Item>
                 </TopMenu>
-                <Sidebar.Pusher style={{
-                    marginTop: '4em',
-                    padding: '0 1.5em',
-                }}>
+                <Sidebar.Pusher
+                    style={{
+                        marginTop: '4em',
+                        padding: '0 1.5em',
+                    }}
+                >
                     {this.props.children}
                 </Sidebar.Pusher>
             </Sidebar.Pushable>
