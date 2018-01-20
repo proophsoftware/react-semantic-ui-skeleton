@@ -13,6 +13,7 @@ import { createStore, applyMiddleware, StoreEnhancer } from 'redux';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { Route, Switch, Router } from 'react-router';
+import Notifications from "./NotificationSystem/containers/NotificationsContainer";
 
 import Overview from './Overview';
 import './theme/semantic/semantic.css';
@@ -80,6 +81,7 @@ const Main = () => (
 const Root = () => (
     <Layout.Sidebar>
         <Main/>
+        <Notifications/>
     </Layout.Sidebar>
 );
 
