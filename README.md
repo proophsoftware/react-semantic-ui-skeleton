@@ -1,7 +1,8 @@
 # react-semantic-ui-skeleton
-React + Redux + Semantic UI Skeleton
 
-Based on [wmonk/create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript) but it's ejected for customization.
+React + Redux + Semantic UI Skeleton with Typescript
+
+Based on [Create React App](https://github.com/facebook/create-react-app).
 
 This application uses [semantic ui themes](https://semantic-ui.com/usage/theming.html). Take a look at the `semantic` folder.
 **Note:** We have to copy the themes from the nodes_modules package `semantic-ui` to `semantic` manually after updates to get the latest assets.
@@ -37,9 +38,9 @@ We have a two stage build.
 You have to manually install the dependencies and to compile the semantic ui theme.
 
 ```bash
-docker run --rm --env-file=app.env.dist -i -v $(pwd):/app sandrokeil/typescript yarn install
+docker run --rm -i -v $(pwd):/app sandrokeil/typescript yarn install
 
-docker run --rm --env-file=app.env.dist -i -p 4000 -p 3000 -v $(pwd):/app sandrokeil/typescript yarn run semantic
+docker run --rm -i -v $(pwd):/app sandrokeil/typescript yarn run semantic
 ```
 
 Now you can start the development server and open [http://localhost:3000/](http://localhost:3000/) in your favourite browser.
