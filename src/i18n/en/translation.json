@@ -1,5 +1,6 @@
 {
     "app": {
-        "title": "React + Redux + Semantic UI Skeleton"
+        "title": "React + Redux + Semantic UI Skeleton",
+        "welcome": "Welcome to React + Redux + Semantic UI Skeleton"
     }
 }

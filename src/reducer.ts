@@ -1,25 +1,20 @@
-import {fromJS, Map} from 'immutable';
-import {combineReducers} from 'redux-immutable';
-import { Action } from 'redux';
-import notificationsReducer, {PATH_NOTIFICATIONS, iNITIAL_STATE as INITIAL_NOTIFICATIONS_STATE} from "./NotificationSystem/reducers";
-import { Command as NotificationsCommand } from "./NotificationSystem/actions";
+import { fromJS, Map } from 'immutable';
+import { combineReducers } from 'redux-immutable';
+import { Action, AnyAction, Dispatch } from 'redux';
+// import notificationsReducer, {PATH_NOTIFICATIONS, iNITIAL_STATE as INITIAL_NOTIFICATIONS_STATE} from "./NotificationSystem/reducers";
+// import { Command as NotificationsCommand } from "./NotificationSystem/actions";
 
-export interface State extends Map<string, {}> {}
 
-let initialState = {};
+// The top-level state object
+export interface ApplicationState {
+}
 
-initialState[PATH_NOTIFICATIONS] = INITIAL_NOTIFICATIONS_STATE;
-export const INITIAL_STATE = fromJS(initialState);
+// Additional props for connected React components. This prop is passed by default with `connect()`
+export interface ConnectedReduxProps<A extends Action = AnyAction> {
+    dispatch: Dispatch<A>
+}
 
-let reducers = {};
-
-reducers[PATH_NOTIFICATIONS] = (state = INITIAL_NOTIFICATIONS_STATE, action: Action) => {
-    switch (action.type) {
-        case NotificationsCommand.CMD_NOTIFY:
-            return notificationsReducer(state, action);
-        default:
-            return state;
-    }
-};
-
-export default combineReducers(reducers);
+// Whenever an action is dispatched, Redux will update each top-level application state property
+// using the reducer with the matching name. It's important that the names match exactly, and that
+// the reducer acts on the corresponding ApplicationState property type.
+export const rootReducer = combineReducers<ApplicationState>({});

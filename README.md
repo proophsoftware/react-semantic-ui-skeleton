@@ -12,16 +12,13 @@ After you have copied these sources to your project you may want to change some 
 This is a list of files which contains default values.
 
 - `app.env.dist`: url
-- `config/webpack.config.dev.js`: `publicPath` and `publicUrl` settings
-- `config/webpack.config.prod.js`: URL pattern for service worker
-- `config/webpackDevServer.config.js`: `public` and `allowedHosts` settings
 - `package.json`: change name
 - `public/index.html`: change title
 - `public/manifest.json`: change name
 - `src/api/ConfiguredAxios.ts`: base API url
 - `src/notify.tsx`: change logo
 - `src/reducer.ts`: add your reducers
-- `src/registerServiceWorker.ts`: notification text
+- `src/serviceWorker.ts`: notification text
 - `devSrvProxy.json.dist`: Proxy config for dev server
 - `docker-compose.yml.dist`: Docker Dev Env (f.e. join backend network)
 
@@ -59,7 +56,19 @@ docker run --rm --env-file=app.env.dist -i -v $(pwd):/app sandrokeil/typescript 
 docker run --rm --env-file=app.env.dist -i -v $(pwd):/app sandrokeil/typescript yarn run build
 ```
 
+## Links
+
+- [Feature like module structure](https://www.robinwieruch.de/tips-to-learn-react-redux/#folderOrganization)
+- [Redux 4 + TypeScript: A type-safe approach](https://resir014.xyz/posts/2018/07/06/redux-4-plus-typescript/)
+- [Higher Order Components (HOCs)](https://medium.com/@franleplant/react-higher-order-components-in-depth-cf9032ee6c3e)
+- [Use a Render Prop!](https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce)
+- [React is Slow, React is Fast](https://marmelab.com/blog/2017/02/06/react-is-slow-react-is-fast.html)
+
 ## Browser extensions
 
 - Install [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
 - Install [react-extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+
+## TODO
+
+- The package [`recompose`](https://github.com/acdlite/recompose) is deprecated in favour of React Hooks, but it's not released yet.

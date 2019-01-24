@@ -1,99 +1,25 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as Layout from './Layout';
-import * as Routes from './routes';
-import createSagaMiddleware from 'redux-saga';
 import notify from './notify';
-import reducer, { State, INITIAL_STATE } from './reducer';
-import registerServiceWorker from './registerServiceWorker';
-import rootSaga from './saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { createHashHistory } from 'history';
-import { createStore, applyMiddleware, StoreEnhancer } from 'redux';
-import { I18nextProvider } from 'react-i18next';
-import { Provider } from 'react-redux';
-import { Route, Switch, Router } from 'react-router';
-import Notifications from "./NotificationSystem/containers/NotificationsContainer";
-
-import Overview from './Overview';
+import { createHashHistory } from 'history'
+import * as serviceWorker from './serviceWorker';
+import configureStore from './configureStore';
 import './theme/semantic/semantic.css';
 import './theme/css/style.css';
+import App from './App';
 
-//Load translations with i18next webpack loader to avoid extra web requests
-import * as i18next from 'i18next';
-
-const resources = require('i18next-resource-store-loader!./i18n/index.js');
-
-const i18n = i18next
-    .init({
-        lng: navigator.language || navigator['userLanguage'], // set dynamically on build
-        fallbackLng: 'en',
-
-        resources: resources,
-        debug: true,
-
-        interpolation: {
-            escapeValue: false // not needed for react!!
-        },
-    });
-
-// if (module.hot) {
-//     module.hot.accept('i18next-resource-store-loader!./i18n/index.js', () => {
-//         const res = require('i18next-resource-store-loader!./i18n/index.js');
-//         Object
-//             .keys(res)
-//             .forEach((lang) => {
-//                 Object
-//                     .keys(res[lang])
-//                     .forEach((namespace) => {
-//                         i18next.addResourceBundle(lang, namespace, res[lang][namespace], true, true );
-//                     })
-//                 ;
-//             })
-//         ;
-//
-//         module.hot.emit('loaded');
-//     });
-// }
-
-const sagaMiddleware = createSagaMiddleware();
-
+// We use hash history because this example is going to be hosted statically.
+// Normally you would use browser history.
 const history = createHashHistory();
 
-const store = createStore(
-    reducer,
-    INITIAL_STATE,
-    composeWithDevTools(
-        applyMiddleware(sagaMiddleware) as StoreEnhancer<State>,
-    ) as StoreEnhancer<State>,
-);
+const initialState = window.initialReduxState;
+const store = configureStore(history, initialState);
 
-sagaMiddleware.run(rootSaga as any);
+ReactDOM.render(<App store={store} history={history}/>, document.getElementById('root'));
 
-// The Main component renders one of provided
-// Routes (provided that one matches).
-const Main = () => (
-    <Switch>
-        <Route exact path={Routes.rootPath} component={Overview}/>
-    </Switch>
-);
-
-const Root = () => (
-    <Layout.Sidebar>
-        <Main/>
-        <Notifications/>
-    </Layout.Sidebar>
-);
-
-ReactDOM.render(
-    <I18nextProvider i18n={i18n}>
-        <Provider store={store}>
-            <Router history={history}>
-                <Root/>
-            </Router>
-        </Provider>
-    </I18nextProvider>,
-    document.getElementById('root'),
-);
 notify();
-registerServiceWorker();
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.register();

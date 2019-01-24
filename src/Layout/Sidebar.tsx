@@ -15,30 +15,33 @@ class SidebarPusher extends React.Component<OwnProps, StateProps> {
 
     componentWillUpdate(nextProps: OwnProps, nextState: StateProps) {
         // when the menu becomes visible, setup some handlers so we can close the menu easily
+        // TODO
+        /*
         if (nextState.visible === true) {
-            document.addEventListener('keydown', this.handleKeyPress);
+            window.addEventListener('keydown', this.handleKeyPress);
             document.querySelector('.pusher').addEventListener('click', this.handleClick);
         } else {
-            document.removeEventListener('keydown', this.handleKeyPress);
+            window.removeEventListener('keydown', this.handleKeyPress);
             document.querySelector('.pusher').removeEventListener('click', this.handleClick);
         }
+        */
     }
 
     handleClick = () => {
         if (this.state.visible) {
             this.setState({visible: false});
         }
-    }
+    };
 
     toggleVisibility = () => this.setState((prevstate: StateProps) => {
         return {visible: !prevstate.visible};
-    })
+    });
 
     hideSidebar = () => this.state.visible && this.setState((prevstate: StateProps) => {
         return {visible: false};
-    })
+    });
 
-    handleKeyPress = (e) => e.keyCode === 27 && this.hideSidebar();
+    handleKeyPress = (e: React.KeyboardEvent) => e.keyCode === 27 && this.hideSidebar();
 
     render() {
         const {visible} = this.state;
