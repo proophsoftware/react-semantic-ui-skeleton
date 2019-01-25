@@ -60,6 +60,7 @@ docker run --rm --env-file=app.env.dist -i -v $(pwd):/app sandrokeil/typescript 
 
 - [Feature like module structure](https://www.robinwieruch.de/tips-to-learn-react-redux/#folderOrganization)
 - [Redux 4 + TypeScript: A type-safe approach](https://resir014.xyz/posts/2018/07/06/redux-4-plus-typescript/)
+- [A Strongly-Typed Redux Action Pattern for TypeScript 2.4+](https://spin.atomicobject.com/2017/07/24/redux-action-pattern-typescript/)
 - [Higher Order Components (HOCs)](https://medium.com/@franleplant/react-higher-order-components-in-depth-cf9032ee6c3e)
 - [Use a Render Prop!](https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce)
 - [React is Slow, React is Fast](https://marmelab.com/blog/2017/02/06/react-is-slow-react-is-fast.html)

@@ -12,10 +12,10 @@ import rootSaga from './saga';
 
 // Import the state interface and our combined reducers/sagas.
 
-export default function configureStore(
+const configureStore = (
     history: History,
     initialState: ApplicationState,
-): Store<ApplicationState> {
+): Store<ApplicationState> => {
     // create the composing function for our middlewares
     const composeEnhancers = composeWithDevTools({});
     // create the redux-saga middleware
@@ -28,9 +28,11 @@ export default function configureStore(
         rootReducer,
         initialState,
         composeEnhancers(applyMiddleware(sagaMiddleware)),
-    );
+    ) as Store<ApplicationState> | any;
 
     // Don't forget to run the root saga, and return the store object.
     sagaMiddleware.run(rootSaga);
     return store;
-}
+};
+
+export default configureStore;

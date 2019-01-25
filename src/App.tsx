@@ -1,30 +1,30 @@
-import * as React from 'react';
-import * as Layout from './Layout';
-import * as Routes from './routes';
-import { ApplicationState } from './reducer';
-import { Store } from 'redux';
-import { Provider } from 'react-redux';
-import { Route, Switch, Router } from 'react-router';
-import i18n from './i18n';
 import { History } from 'history'
-import Overview from './Overview';
-import './theme/semantic/semantic.css';
-import './theme/css/style.css';
+import * as React from 'react';
 import { I18nextProvider } from 'react-i18next';
-
+import { Provider } from 'react-redux';
+import { Route, Router, Switch } from 'react-router';
+import { Store } from 'redux';
+import i18n from './i18n';
+import * as Layout from './Layout';
+import {NotificationContainer} from './NotificationSystem';
+import Overview from './Overview';
+import { ApplicationState } from './reducer';
+import * as Routes from './routes';
+import './theme/css/style.css';
+import './theme/semantic/semantic.css';
 
 // The Main component renders one of provided
 // Routes (provided that one matches).
 const Main = () => (
     <Switch>
-        <Route exact path={Routes.rootPath} component={Overview}/>
+        <Route exact={true} path={Routes.rootPath} component={Overview}/>
     </Switch>
 );
 
 const Root = () => (
     <Layout.Sidebar>
         <Main/>
-        {/*<Notifications/>*/}
+        <NotificationContainer/>
     </Layout.Sidebar>
 );
 

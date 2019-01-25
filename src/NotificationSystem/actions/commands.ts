@@ -1,55 +1,41 @@
-import {Action} from "redux";
+import { action } from 'typesafe-actions';
 import {NotificationModel} from "../model";
-import * as uuid from 'uuid';
 
-export const CMD_NOTIFY = "NotificationSystem.Notify";
-
-function setUidIfNotSet(message: NotificationModel.Message): NotificationModel.Message {
-    if(message.uid() === 'unknown') {
-        return message.set("uid", uuid.v4()) as NotificationModel.Message;
-    }
-
-    return message;
-}
-
-export interface Notify extends Action {
+export interface Notify {
     message: NotificationModel.Message
 }
 
-export function notify(message: NotificationModel.Message): Notify {
-    message = setUidIfNotSet(message);
-    return {
-        message,
-        type: CMD_NOTIFY
-    }
+export enum NotificationSystemActions {
+    NOTIFY = '@@NotificationSystem/Notify',
 }
 
-export function info(title: string, message: string, autoDismiss?: number): Notify {
-    if(typeof autoDismiss === "undefined") {
-        autoDismiss = 5;
-    }
+export interface NotifyAction extends Notify{
+    type: NotificationSystemActions.NOTIFY,
+}
 
-    return {
-        message: new NotificationModel.Message({
-            title: title,
-            message: message,
+export type NotificationSystemActionTypes = NotifyAction;
+
+
+export const notify = (message: NotificationModel.Message  ) => action<string, NotificationModel.Message>(NotificationSystemActions.NOTIFY, message);
+
+export const info =  (title: string, message: string, autoDismiss = 5 ) => {
+    const msg = new NotificationModel.Message({
+            title,
+            message,
             level: "info",
-            autoDismiss: autoDismiss,
-            uid: uuid.v4(),
-        }),
-        type: CMD_NOTIFY
-    }
-}
+            autoDismiss,
+        });
 
-export function error(title: string, message: string): Notify {
-    return {
-        message: new NotificationModel.Message({
-            title: title,
-            message: message,
+    return action<string, NotificationModel.Message>(NotificationSystemActions.NOTIFY, msg);
+};
+
+export const error =  (title: string, message: string ) => {
+    const msg = new NotificationModel.Message({
+            title,
+            message,
             level: "error",
             autoDismiss: 0,
-            uid: uuid.v4(),
-        }),
-        type: CMD_NOTIFY
-    }
-}
+        });
+
+    return action<string, NotificationModel.Message>(NotificationSystemActions.NOTIFY, msg);
+};

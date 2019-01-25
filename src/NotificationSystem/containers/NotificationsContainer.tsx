@@ -1,31 +1,30 @@
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {translate, InjectedTranslateProps} from "react-i18next";
-import {NotificationModel} from "../model";
-import { Dispatch } from '../../types/types';
-import {Command} from '../actions';
-import Notifications from "../components/Notifications";
-import {NotificationsSelector} from "../selectors";
-import {List} from "immutable";
+import { bindActionCreators, Dispatch } from 'redux';
+import { ApplicationState, ConnectedReduxProps } from '../../reducer';
+import { Command } from '../actions';
+import Notifications from '../components/Notifications';
+// import { NotificationsSelector } from '../selectors';
 
-interface StateProps extends InjectedTranslateProps {
-    messages: List<NotificationModel.Message>
-}
 
-interface PropsToDispatch {
-    onMessageShown: (message: NotificationModel.Message) => void,
-}
+// It's usually good practice to only include one context at a time in a connected component.
+// Although if necessary, you can always include multiple contexts. Just make sure to
+// separate them from each other to prevent prop conflicts.
+const mapStateToProps = ({notificationSystem}: ApplicationState) => ({
+    messages: notificationSystem.messages,
+});
 
-interface OwnProps {
-    maxMessages?: number,
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return bindActionCreators({
+// mapDispatchToProps is especially useful for constraining our actions to the connected component.
+// You can access these via `this.props`.
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(
+    {
         onMessageShown: Command.notify,
-    } as any, dispatch);
-};
+    },
+    dispatch,
+);
 
-const NotificationsContainer = connect<StateProps, PropsToDispatch, OwnProps>(NotificationsSelector.makeMapStateTopPropsNotifications(), mapDispatchToProps, undefined, {pure: false})(Notifications as any);
-
-export default translate()(NotificationsContainer);
+// Now let's connect our component!
+// With redux v4's improved typings, we can finally omit generics here.
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Notifications);
