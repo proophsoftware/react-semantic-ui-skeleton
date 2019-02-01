@@ -1,12 +1,12 @@
-import { Store, createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
+// If you use react-router, don't forget to pass in your history type.
+import { History } from 'history';
+import { applyMiddleware, createStore, Store } from 'redux';
 // `react-router-redux` is deprecated, so we use `connected-react-router`.
 // This provides a Redux middleware which connects to our `react-router` instance.
 // We'll be using Redux Devtools. We can use the `composeWithDevTools()`
 // directive so we can pass our middleware along with it
 import { composeWithDevTools } from 'redux-devtools-extension';
-// If you use react-router, don't forget to pass in your history type.
-import { History } from 'history';
+import createSagaMiddleware from 'redux-saga';
 import { ApplicationState, rootReducer } from './reducer';
 import rootSaga from './saga';
 

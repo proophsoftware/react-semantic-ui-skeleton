@@ -1,4 +1,5 @@
 import { createHashHistory } from 'history'
+import {fromJS} from "immutable";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './App';
@@ -12,9 +13,7 @@ import './theme/semantic/semantic.css';
 // Normally you would use browser history.
 const history = createHashHistory();
 
-const initialState = window.initialReduxState;
-
-const store = configureStore(history, initialState);
+const store = configureStore(history, fromJS({}));
 
 ReactDOM.render(<App store={store} history={history}/>, document.getElementById('root'));
 

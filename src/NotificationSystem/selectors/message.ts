@@ -1,30 +1,25 @@
-import { List } from 'immutable';
+import {fromJS, List} from 'immutable';
 import { createSelector } from 'reselect';
-import { MessagesState } from '../reducers/applyNotify';
-import { NotificationModel } from '../model';
 import { ApplicationState } from '../../reducer';
+import { NotificationModel } from '../model';
 
+export const notificationsSelector = (state: any, props: any) => state.getIn(['notificationSystem', 'messages'], fromJS([]));
 
-// export const getSelectedEventId = (state: ApplicationState, props: { selectedEventId: string | null }): string | null => {
-//     return props.selectedEventId;
-// };
-// export const eventStreamSelector = (state: MessagesState, props: any): any => state.getIn(['sapImportStream', 'stream']);
-//
-// // noinspection TypeScriptValidateTypes
-// export const selectedEventSelector = createSelector<ApplicationState>(
-//     getSelectedEventId,
-//     eventStreamSelector,
-//     (selectedEventId: string | null, eventStream: List<NotificationModel.Message>): NotificationModel.Message | null => {
-//         if (!selectedEventId) {
-//             return null;
-//         }
-//
-//         if (!eventStream) {
-//             return null;
-//         }
-//
-//         const message = eventStream.find((event: NotificationModel.Message) => event.uid.toString() === selectedEventId);
-//
-//         return message || null;
-//     }
-// );
+export const makeGetNotifications = (): (state: ApplicationState, props: any) => List<NotificationModel.Message> => {
+    return createSelector(
+        [notificationsSelector] as any,
+        (messages: List<NotificationModel.Message>): List<NotificationModel.Message> => messages
+    )
+}
+
+export const makeMapStateTopPropsNotifications = () => {
+    const getNotifications = makeGetNotifications();
+
+    return (state: ApplicationState, props: any) => {
+        const messages = getNotifications(state, props);
+
+        return {
+            messages,
+        }
+    }
+}

@@ -1,22 +1,8 @@
 import { action } from 'typesafe-actions';
 import {NotificationModel} from "../model";
+import { NOTIFY } from "./constants";
 
-export interface Notify {
-    message: NotificationModel.Message
-}
-
-export enum NotificationSystemActions {
-    NOTIFY = '@@NotificationSystem/Notify',
-}
-
-export interface NotifyAction extends Notify{
-    type: NotificationSystemActions.NOTIFY,
-}
-
-export type NotificationSystemActionTypes = NotifyAction;
-
-
-export const notify = (message: NotificationModel.Message  ) => action<string, NotificationModel.Message>(NotificationSystemActions.NOTIFY, message);
+export const notify = (message: NotificationModel.Message  ) => action(NOTIFY, message);
 
 export const info =  (title: string, message: string, autoDismiss = 5 ) => {
     const msg = new NotificationModel.Message({
@@ -26,7 +12,7 @@ export const info =  (title: string, message: string, autoDismiss = 5 ) => {
             autoDismiss,
         });
 
-    return action<string, NotificationModel.Message>(NotificationSystemActions.NOTIFY, msg);
+    return action(NOTIFY, msg);
 };
 
 export const error =  (title: string, message: string ) => {
@@ -37,5 +23,5 @@ export const error =  (title: string, message: string ) => {
             autoDismiss: 0,
         });
 
-    return action<string, NotificationModel.Message>(NotificationSystemActions.NOTIFY, msg);
+    return action(NOTIFY, msg);
 };

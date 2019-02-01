@@ -1,7 +1,8 @@
-import { fromJS, List } from 'immutable';
-import { NotificationModel } from '../model';
+import { List } from 'immutable';
 import { Reducer } from 'redux';
-import { NotificationSystemActions, NotificationSystemActionTypes } from '../actions/commands';
+import {MESSAGE_HANDLED, NOTIFY} from "../actions/constants";
+import { NotificationModel } from '../model';
+import {NotificationsAction} from "./index";
 
 export interface MessagesState extends List<NotificationModel.Message> {
 }
@@ -9,24 +10,25 @@ export interface MessagesState extends List<NotificationModel.Message> {
 // Type-safe initialState!
 export const initialState: MessagesState = List<NotificationModel.Message>();
 
+
 // Thanks to Redux 4's much simpler typings, we can take away a lot of typings on the reducer side,
 // everything will remain type-safe.
-const reducer: Reducer<MessagesState, NotificationSystemActionTypes> = (state = initialState, action: NotificationSystemActionTypes) => {
+const reducer: Reducer<MessagesState, NotificationsAction> = (state: MessagesState = initialState, action: NotificationsAction): MessagesState => {
     switch (action.type) {
-        case NotificationSystemActions.NOTIFY: {
-            const idx = state.findIndex(lMsg => lMsg.uid === action.message.uid);
+        case NOTIFY:
+        case MESSAGE_HANDLED:
+            const idx = state.findIndex(lMsg => lMsg.uid === action.payload.uid);
 
             if (idx > -1) {
-                if (action.message.handled) {
+                if (action.payload.handled) {
                     state = state.remove(idx);
                 } else {
-                    state = state.set(idx, action.message);
+                    state = state.set(idx, action.payload);
                 }
             } else {
-                state = state.push(action.message);
+                state = state.push(action.payload);
             }
             return state;
-        }
         default:
             return state;
     }

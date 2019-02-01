@@ -12,14 +12,13 @@ After you have copied these sources to your project you may want to change some 
 This is a list of files which contains default values.
 
 - `app.env.dist`: url
-- `package.json`: change name
+- `package.json`: change name, configure [proxy](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development) for dev
 - `public/index.html`: change title
 - `public/manifest.json`: change name
 - `src/api/ConfiguredAxios.ts`: base API url
 - `src/notify.tsx`: change logo
 - `src/reducer.ts`: add your reducers
 - `src/serviceWorker.ts`: notification text
-- `devSrvProxy.json.dist`: Proxy config for dev server
 - `docker-compose.yml.dist`: Docker Dev Env (f.e. join backend network)
 
 ## Frontend build
