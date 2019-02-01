@@ -12,6 +12,7 @@ import { ApplicationState } from './reducer';
 import * as Routes from './routes';
 import './theme/css/style.css';
 import './theme/semantic/semantic.css';
+import { ToastContainer } from 'react-toastify';
 
 // The Main component renders one of provided
 // Routes (provided that one matches).

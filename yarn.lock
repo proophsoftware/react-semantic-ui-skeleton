@@ -1014,13 +1014,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-notification-system@^0.2.39":
-  version "0.2.39"
-  resolved "https://registry.yarnpkg.com/@types/react-notification-system/-/react-notification-system-0.2.39.tgz#18664f44fa724b93493a04efee8984b3898ba78f"
-  integrity sha512-yfptO86dbfW4qaw34CIedfakdKWV3sPM0xb4T5EQZOza80WLvOUUKjdmZTeGyEKk/7n2za8RJa6aZpz/A+2Qbw==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-redux@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.0.0.tgz#8aaba50fb43739462c40e65e85f96eb8a550d494"

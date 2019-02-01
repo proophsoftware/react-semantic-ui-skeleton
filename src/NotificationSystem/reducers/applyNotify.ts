@@ -7,7 +7,7 @@ export interface MessagesState extends List<NotificationModel.Message> {
 }
 
 // Type-safe initialState!
-export const initialState: MessagesState = fromJS([]);
+export const initialState: MessagesState = List<NotificationModel.Message>();
 
 // Thanks to Redux 4's much simpler typings, we can take away a lot of typings on the reducer side,
 // everything will remain type-safe.
