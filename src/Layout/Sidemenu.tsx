@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { pure } from 'recompose';
-import { translate, InjectedTranslateProps } from 'react-i18next';
+import { withNamespaces, WithNamespaces } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { Menu, MenuItem, Sidebar, Image } from 'semantic-ui-react';
 const logo = require('../theme/img/prooph-logo@0.5x.png');
 
-export interface SidemenuProps extends InjectedTranslateProps {
+export interface SidemenuProps extends WithNamespaces {
     visible: boolean;
     handleClick: any;
 }
@@ -37,4 +37,4 @@ const Sidemenu = pure((props: SidemenuProps) => {
     );
 });
 
-export default translate('translation')(Sidemenu);
+export default withNamespaces('translation')(Sidemenu);

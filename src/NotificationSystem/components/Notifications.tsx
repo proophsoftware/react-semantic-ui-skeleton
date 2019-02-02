@@ -1,53 +1,50 @@
+import { List } from 'immutable';
 import * as React from 'react';
-import {List} from "immutable";
-import {NotificationModel} from "../model";
-const NotificationSystemComponent = require("react-notification-system");
+import { WithNamespaces } from 'react-i18next';
+import { toast, ToastContainer } from 'react-toastify';
+import { Command, Event } from '../actions';
+import { NotificationModel } from '../model';
 
-export interface NotificationsProps {
-    messages: List<NotificationModel.Message>,
-    onMessageShown: (message: NotificationModel.Message) => void,
-    maxMessages?: number,
+import 'react-toastify/dist/ReactToastify.css';
+
+
+// Separate state props + dispatch props to their own interfaces.
+interface PropsFromState {
+    messages: List<NotificationModel.Message>
 }
 
-interface NotificationSystem {
-    addNotification: (message: object) => void;
+// We can use `typeof` here to map our dispatch types to the props, like so.
+interface PropsFromDispatch {
+    sendNotify: typeof Command.info,
+    onHandled: typeof Event.publishMessageHandled,
 }
 
-export default class Notifications extends React.Component<NotificationsProps, undefined> {
-    system: NotificationSystem
-
-    prepareMsg = (msg: NotificationModel.Message, count: number) => {
-        if (this.props.maxMessages && count >= this.props.maxMessages) {
-            return;
-        }
-
-        let notification = msg.toJS();
-        notification.onRemove = () => {
-            this.props.onMessageShown(msg.markAsHandled())
-        }
-
-        this.system.addNotification(notification);
-    }
-
-    componentDidMount() {
-        let count = 0;
-        this.props.messages.filter(msg => !msg.handled())
-            .forEach((msg) => {
-                this.prepareMsg(msg, count);
-                count++;
-            });
-    }
-
-    componentWillReceiveProps(nextProps: NotificationsProps) {
-        let count = 0;
-        nextProps.messages.filter(msg => !msg.handled())
-            .forEach((msg) => {
-                this.prepareMsg(msg, count);
-                count++;
-            });
-    }
-
-    render() {
-        return <NotificationSystemComponent ref={(sys) => this.system = sys} />
-    }
+interface OwnProps {
+    maxMessages?: number
 }
+
+export interface NotificiationsProps extends PropsFromState, PropsFromDispatch, OwnProps {
+}
+
+// Combine both state + dispatch props - as well as any props we want to pass - in a union type.
+type AllProps = PropsFromState &
+    PropsFromDispatch &
+    // ConnectedReduxProps &
+    OwnProps &
+    WithNamespaces
+
+
+const options = {
+    // onOpen: (props:any) => console.log({props}),
+    // onClose: (props:any) => console.log({props}),
+    autoClose: 6000,
+    type: toast.TYPE.INFO,
+    hideProgressBar: false,
+    position: toast.POSITION.BOTTOM_LEFT,
+    pauseOnHover: true,
+    // progress: 0.2
+};
+
+export const Notifications = (props: NotificiationsProps) =>
+    <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
+;

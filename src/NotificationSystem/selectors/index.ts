@@ -1,5 +1,5 @@
-import * as NotificationsSelector from "./notifications";
+import * as MessageSelector from "./message"
 
 export {
-    NotificationsSelector
+    MessageSelector
 }

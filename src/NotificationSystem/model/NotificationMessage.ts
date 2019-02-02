@@ -1,15 +1,16 @@
-import {Record} from 'immutable';
+import { Record } from 'immutable';
+import * as uuid from 'uuid';
 
 export interface NotificationActionType {
     label: string,
     callback: () => void
 }
 
-export interface MessageType {
-    title?: string | null,
-    message?: string | null,
-    level?: "success" | "error" | "warning" | "info",
-    position?: "tr" | "tl" | "tc" | "br" | "bl" | "bc",
+export interface MessageProps {
+    title?: string,
+    message: string,
+    level?: 'success' | 'error' | 'warning' | 'info',
+    position?: 'tr' | 'tl' | 'tc' | 'br' | 'bl' | 'bc',
     autoDismiss?: number,
     dismissible?: boolean,
     handled?: boolean,
@@ -17,73 +18,60 @@ export interface MessageType {
     action?: NotificationActionType | null,
 }
 
-export class Message extends Record({
-    title: null,
-    message: null,
-    level: "info",
-    position: "bl",
+const defaultMessageProps: MessageProps = {
+    title: '',
+    message: '',
+    level: 'info',
+    position: 'bl',
     autoDismiss: 5,
     dismissible: true,
     handled: false,
-    uid: 'unknown',
+    uid: undefined,
     action: null,
-}) {
-    constructor(data: MessageType) {
+};
+
+// export class Message implements MessageProps {
+//     public readonly title!: string;
+//     public readonly message!: string;
+//     public readonly level!: 'success' | 'error' | 'warning' | 'info';
+//     public readonly position!: 'tr' | 'tl' | 'tc' | 'br' | 'bl' | 'bc';
+//     public readonly autoDismiss!: number;
+//     public readonly dismissible!: boolean;
+//     public readonly handled!: boolean;
+//     public readonly uid!: string;
+//     public readonly action!: NotificationActionType | null;
+//
+//
+//     public constructor(data: Partial<MessageProps>) {
+//         Object.assign(this, data);
+//     }
+//
+//     public markAsHandled(): Message {
+//         // return this.set('handled', true) as Message;
+//         return this;
+//     }
+//
+//     public hasAction(): boolean {
+//         return null !== this.action;
+//     }
+//
+// }
+//
+export class Message extends Record(defaultMessageProps) implements MessageProps {
+
+    public constructor(data: Partial<MessageProps>) {
+        if (data.uid === undefined) {
+            data.uid = uuid.v4();
+        }
         super(data);
-        this.title = this.title.bind(this);
-        this.message = this.message.bind(this);
-        this.level = this.level.bind(this);
-        this.position = this.position.bind(this);
-        this.autoDismiss = this.autoDismiss.bind(this);
-        this.dismissible = this.dismissible.bind(this);
-        this.handled = this.handled.bind(this);
-        this.uid = this.uid.bind(this);
-        this.markAsHandled = this.markAsHandled.bind(this);
-        this.hasAction = this.hasAction.bind(this);
-        this.action = this.action.bind(this);
     }
 
-    title(): string | null {
-        return this.get("title");
+    public markAsHandled(): Message {
+        return this.set('handled', true) as Message;
     }
 
-    message(): string | null {
-        return this.get("message");
+    public hasAction(): boolean {
+        return null !== this.action;
     }
 
-    level(): string {
-        return this.get("level")
-    }
-
-    position(): string {
-        return this.get("position")
-    }
-
-    autoDismiss(): number {
-        return this.get("autoDismiss")
-    }
-
-    dismissible(): boolean {
-        return this.get("dismissible");
-    }
-
-    handled(): boolean {
-        return this.get("handled");
-    }
-
-    uid(): string {
-        return this.get("uid");
-    }
-
-    markAsHandled(): Message {
-        return this.set("handled", true) as Message;
-    }
-
-    hasAction(): boolean {
-        return null !== this.get("action", null);
-    }
-
-    action(): NotificationActionType | null {
-        return this.get("action", null);
-    }
 }

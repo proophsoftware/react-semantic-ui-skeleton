@@ -1,4 +1,4 @@
-import * as Notify from 'notifyjs';
+import Notify from 'notifyjs';
 
 const logo = require('./theme/img/prooph-logo@0.5x.png');
 

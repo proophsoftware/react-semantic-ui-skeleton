@@ -1,17 +1,17 @@
-import {applyNotify} from "./applyNotify";
 import {fromJS} from "immutable";
-import {State} from "../../reducer";
-import {Action} from "redux";
-import {Command} from "../actions";
+import { combineReducers } from 'redux-immutable';
+import {ActionType} from "typesafe-actions";
+import * as Commands from "../actions/commands";
+import * as Events from "../actions/events";
+import { applyReducer, MessagesState } from './applyNotify';
 
-export const PATH_NOTIFICATIONS = 'notifications';
-export const iNITIAL_STATE = fromJS({});
+export type NotificationsAction = ActionType<typeof Commands> | ActionType<typeof Events>;
 
-export default (state: State, action: Action): State => {
-    switch (action.type) {
-        case Command.CMD_NOTIFY:
-            return applyNotify(state, <Command.Notify>action);
-        default:
-            return state;
-    }
+export interface NotificationSystemState {
+    messages: MessagesState
 }
+
+export const NotificationSystemReducer = combineReducers<NotificationSystemState, NotificationsAction>({
+    messages: applyReducer
+}, () => fromJS({messages: undefined}));
+

@@ -1,7 +1,0 @@
-{
-  "proxy": {
-    "/api": {
-      "target": "http://nginx"
-    }
-  }
-}
